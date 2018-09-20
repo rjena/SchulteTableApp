@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Методика Шульте</string>
+    <string name="settings">Настройки</string>
+    <string name="about">О программе</string>
+    <!---->
+    <string name="help">Справка</string>
+    <string name="sign">Авторизация</string>
+    <string name="guest">Войти в режиме гостя</string>
+    <string name="sign_up"><u>Регистрация</u></string>
+    <string name="sign_in">Войти</string>
+    <string name="start">Начать</string>
+    <string name="stat">Статистика</string>
+    <!---->
+    <string name="login">Электронный адрес</string>
+    <string name="login_h">Введите E-mail</string>
+    <string name="password">Пароль</string>
+    <string name="password_h">Введите пароль</string>
+    <string name="no_acc">У вас нет аккаунта?\u0020<u>Зарегистрируйтесь</u>.</string>
+    <string name="login_u">Укажите электронный адрес</string>
+    <string name="birth_u">Введите дату рождения</string>
+    <string name="password_u">Придумайте пароль</string>
+    <string name="password_u2">Повторите пароль</string>
+    <!---->
+    <string name="help_info"> Информация о том, как пользоваться, о тестировании. </string>
+    <string name="summary"> Краткая информация о том, как проходит тестирование. </string>
+
+</resources>
