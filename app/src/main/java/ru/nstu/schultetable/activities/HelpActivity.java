@@ -1,11 +1,14 @@
-package ru.nstu.schultetable;
+package ru.nstu.schultetable.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import ru.nstu.schultetable.R;
 
 public class HelpActivity extends AppCompatActivity {
 
@@ -13,8 +16,8 @@ public class HelpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final ImageButton back = findViewById(R.id.backIB);
         TextView tv = findViewById(R.id.textView);
 
         Intent intent = getIntent();
@@ -24,12 +27,22 @@ public class HelpActivity extends AppCompatActivity {
             tv.setText(R.string.about);
         else
             tv.setText(R.string.help_info);
+    }
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 onBackPressed();
-            }
-        });
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

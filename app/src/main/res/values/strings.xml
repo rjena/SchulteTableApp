@@ -8,7 +8,7 @@
     <string name="guest">Войти в режиме гостя</string>
     <string name="sign_up"><u>Регистрация</u></string>
     <string name="sign_in">Войти</string>
-    <string name="start">Начать</string>
+    <string name="start">Начать тестирование</string>
     <string name="stat">Статистика</string>
     <!---->
     <string name="login">Электронный адрес</string>
