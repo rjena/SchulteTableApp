@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/refresh"
+        android:enabled="false"
+        android:icon="@drawable/refresh_white"
+        android:title="refresh"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/info"
+        android:enabled="false"
+        android:icon="@drawable/help_white"
+        android:title="info"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/settings_white"
+        android:title="settings"
+        app:showAsAction="always" />
+
+</menu>

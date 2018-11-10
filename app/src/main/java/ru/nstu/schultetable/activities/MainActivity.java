@@ -1,6 +1,7 @@
 package ru.nstu.schultetable.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import ru.nstu.schultetable.R;
 
 public class MainActivity extends AppCompatActivity {
+    static SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Button sign = findViewById(R.id.signB);
         Button start = findViewById(R.id.startB);
         Button help = findViewById(R.id.helpB);
+        settings = getPreferences(MODE_PRIVATE);
 
         // ширина кнопок одинаковая
         Display display = getWindowManager().getDefaultDisplay();
@@ -65,9 +68,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public static boolean[] getSettings() {
+        /*
+        Theme: light-false, dark-true
+        Timer: on-false, off-true
+        Counter: on-false, off-true
+        Sound: on-false, off-true
+        */
+        boolean[] set = {
+                settings.getBoolean("theme", false),
+                settings.getBoolean("timer", true),
+                settings.getBoolean("counter", true),
+                settings.getBoolean("sound", true)
+        };
+        return set;
+    }
+
+    public static void setSettings(boolean theme, boolean timer, boolean counter, boolean sound) {
+        SharedPreferences.Editor ed = settings.edit();
+        ed.putBoolean("theme", false);
+        //ed.putBoolean("theme", theme);
+        ed.putBoolean("timer", timer);
+        ed.putBoolean("counter", counter);
+        ed.putBoolean("sound", sound);
+        ed.apply();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        if (getSettings()[0])
+            getMenuInflater().inflate(R.menu.menu_dark, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_light, menu);
         MenuItem info = menu.findItem(R.id.info);
         info.setVisible(true);
         info.setEnabled(true);

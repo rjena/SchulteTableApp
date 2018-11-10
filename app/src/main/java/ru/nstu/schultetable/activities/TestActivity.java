@@ -4,17 +4,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -26,13 +24,15 @@ import java.util.TimerTask;
 
 import ru.nstu.schultetable.R;
 
+import static ru.nstu.schultetable.activities.MainActivity.getSettings;
+
 public class TestActivity extends AppCompatActivity {
     int counter;
     ArrayList<Button> buttons;
     TextView counterTV;
     TextView timerTV;
     long startTime = 0;
-
+    TypedValue background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +44,23 @@ public class TestActivity extends AppCompatActivity {
         timerTV = findViewById(R.id.timerTV);
         GridLayout gl = findViewById(R.id.gl);
 
+        if (!getSettings()[1])
+            timerTV.setVisibility(View.INVISIBLE);
+        if (!getSettings()[2])
+            counterTV.setVisibility(View.INVISIBLE);
+
+
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        int x = size.x - 40;
+        int x = size.x - 50;
+        background = new TypedValue();
+        getTheme().resolveAttribute(android.R.attr.windowBackground, background, true);
 
         buttons = new ArrayList<>();
         for (int i=0; i<25; i++) {
             final Button bt = new Button(this);
-            bt.setBackgroundColor(Color.WHITE);
+            bt.setBackgroundColor(background.data);
             gl.addView(bt);
             GridLayout.LayoutParams params = (GridLayout.LayoutParams) bt.getLayoutParams();
             params.width = x / 5;
@@ -62,6 +70,7 @@ public class TestActivity extends AppCompatActivity {
             params.leftMargin=1;
             params.rightMargin=1;
             bt.setLayoutParams(params);
+            bt.setTextSize(x/20);
             buttons.add(bt);
         }
         newTest();
@@ -112,7 +121,7 @@ public class TestActivity extends AppCompatActivity {
                             break;
                         case MotionEvent.ACTION_UP:
                         case MotionEvent.ACTION_CANCEL: {
-                            buttons.get(ii).setBackgroundColor(Color.WHITE);
+                            buttons.get(ii).setBackgroundColor(background.data);
                             buttons.get(ii).invalidate();
                             break;
                         }
@@ -131,7 +140,10 @@ public class TestActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        if (getSettings()[0])
+            getMenuInflater().inflate(R.menu.menu_dark, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_light, menu);
         MenuItem refresh = menu.findItem(R.id.refresh);
         refresh.setVisible(true);
         refresh.setEnabled(true);

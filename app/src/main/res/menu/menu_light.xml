@@ -5,7 +5,7 @@
     <item
         android:id="@+id/refresh"
         android:enabled="false"
-        android:icon="@android:drawable/stat_notify_sync"
+        android:icon="@drawable/refresh_black"
         android:title="refresh"
         android:visible="false"
         app:showAsAction="always" />
@@ -13,14 +13,14 @@
     <item
         android:id="@+id/info"
         android:enabled="false"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@drawable/help_black"
         android:title="info"
         android:visible="false"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/settings"
+        android:icon="@drawable/settings_black"
         android:title="settings"
         app:showAsAction="always" />
 

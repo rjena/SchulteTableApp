@@ -7,9 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import ru.nstu.schultetable.R;
+
+import static ru.nstu.schultetable.activities.MainActivity.getSettings;
 
 public class ReadyActivity extends AppCompatActivity {
 
@@ -39,7 +40,10 @@ public class ReadyActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        if (getSettings()[0])
+            getMenuInflater().inflate(R.menu.menu_dark, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_light, menu);
         return true;
     }
 
