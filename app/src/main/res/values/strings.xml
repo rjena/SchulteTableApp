@@ -14,15 +14,23 @@
     <string name="start">Начать тестирование</string>
     <string name="stat">Статистика</string>
     <!---->
-    <string name="login">Электронный адрес</string>
-    <string name="login_h">Введите E-mail</string>
+    <string name="login">Электронный адрес или логин</string>
+    <string name="login_h">Введите E-mail или логин</string>
     <string name="password">Пароль</string>
     <string name="password_h">Введите пароль</string>
     <string name="no_acc">У вас нет аккаунта?\u0020<u>Зарегистрируйтесь</u>.</string>
-    <string name="login_u">Укажите электронный адрес</string>
+    <string name="email_u">Укажите электронный адрес</string>
+    <string name="email_h">Введите E-mail</string>
+    <string name="username_u">Придумайте логин</string>
+    <string name="username_h">Не менее 3 символов</string>
+    <string name="name_u">Укажите ваше имя</string>
+    <string name="name_h">Введите имя</string>
     <string name="birth_u">Введите дату рождения</string>
-    <string name="password_u">Придумайте пароль</string>
-    <string name="password_u2">Повторите пароль</string>
+    <string name="birth_h">YYYY-MM-DD</string>
+    <string name="password_u1">Придумайте пароль</string>
+    <string name="password_u2">Подвердите пароль</string>
+    <string name="password_h1">Не менее 8 символов</string>
+    <string name="password_h2">Повторите пароль</string>
     <!---->
     <string name="help_info"> Данная программа представляет собой психологическое тестирование по методике Шульте,
         направленное на определение некоторых характеристик внимания.\nВам будут поочередно предложены
@@ -50,4 +58,41 @@
     <string name="settings_timer">Таймер</string>
     <string name="settings_counter">Счетчик</string>
     <string name="settings_sound">Звуки</string>
+    <!---->
+    <string name="error_email_incorrect">Некорректный E-mail</string>
+    <string name="error_email_long">E-mail слишком длинный\n(не более 50 символов)</string>
+    <string name="error_username_short">Логин слишком короткий\n(не менее 3 символов)</string>
+    <string name="error_username_long">Логин слишком длинный\n(не более 50 символов)</string>
+    <string name="error_email_taken">Введенный E-mail уже занят</string>
+    <string name="error_username_taken">Введенный логин уже занят</string>
+    <string name="error_name_long">Имя слишком длинное\n(не более 100 символов)</string>
+    <string name="error_pass_mismatch">Пароли не совпадают</string>
+    <string name="error_pass_short">Пароль слишком короткий\n(не менее 8 символов)</string>
+    <string name="error_pass_long">Пароль слишком длинный\n(не более 100 символов)</string>
+    <string name="error_no_connection">Нет соединения!</string>
+    <string name="error_no_user">Такого пользователя нет!</string>
+    <string name="error_wrong_password">Пароль неверный!</string>
+    <!---->
+    <string name="test_WE">Эффективность работы</string>
+    <string name="test_WU">Степень врабатываемости</string>
+    <string name="test_PS">Психическая устойчивость</string>
+    <string name="test_next">Следующая таблица №</string>
+    <string name="test_continue">Продолжить</string>
+    <!---->
+    <string name="acc_text">Измените необходимые данные</string>
+    <string name="acc_email">E-mail</string>
+    <string name="acc_login">Логин</string>
+    <string name="acc_bday">Дата рождения</string>
+    <string name="acc_name">Имя</string>
+    <string name="acc_pass">Новый пароль</string>
+    <string name="acc_edit_success">Данные успешны изменены</string>
+    <!---->
+    <string name="cancel">Отмена</string>
+    <string name="choose">Выбрать</string>
+    <string name="time_format">ss.ms</string>
+    <string name="new_user">Аккаунт успешно создан. Пожалуйста, подтвердите адрес электронной почты,
+        чтобы можно было восстановить пароль при необходимости.</string>
+    <string name="edit_profile">Редактировать профиль</string>
+    <string name="log_out">Выйти из профиля</string>
+    <string name="user">Пользователь</string>
 </resources>

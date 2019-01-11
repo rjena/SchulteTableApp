@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="20dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/gl"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="20dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/gl"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -28,13 +28,11 @@
         android:id="@+id/gl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20px"
-        android:layout_marginEnd="20px"
-        android:layout_marginStart="20px"
-        android:layout_marginTop="20px"
+        android:layout_margin="20dp"
         android:columnCount="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></GridLayout>
+        app:layout_constraintTop_toTopOf="parent">
+    </GridLayout>
 </android.support.constraint.ConstraintLayout>

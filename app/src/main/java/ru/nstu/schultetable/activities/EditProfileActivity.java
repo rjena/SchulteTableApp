@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -32,11 +33,14 @@ import ru.nstu.schultetable.models.UserModel;
 import ru.nstu.schultetable.rest.ApiUtils;
 import ru.nstu.schultetable.rest.STInterface;
 
+import static ru.nstu.schultetable.activities.MainActivity.changeMATheme;
+import static ru.nstu.schultetable.activities.MainActivity.getCurrentUserID;
 import static ru.nstu.schultetable.activities.MainActivity.getSettings;
+import static ru.nstu.schultetable.activities.MainActivity.resetCurrentUserID;
 
-public class SignUpActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
     Activity activity;
-    Button signUpB;
+    Button editB;
     EditText emailET;
     EditText loginET;
     EditText nameET;
@@ -48,21 +52,20 @@ public class SignUpActivity extends AppCompatActivity {
     LinearLayout noConnectionLL;
     ImageButton retryIB;
     TypedValue background;
-    ArrayList<String> usersLogins, usersEmails;
+    String uID= "", uName, uLogin, uEmail, uBirth, uPassword, uEmailToken, uPasswordToken,
+            fuName, fuLogin, fuEmail, fuBirth, fuPassword, fuEmailToken, fuPasswordToken;
+    String newName, newLogin, newEmail, newBirth, newPassword, newEmailToken, newPasswordToken;
+    ArrayList<String> usersIDs, usersLogins, usersEmails, usersPasswords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(getSettings()[0] ? R.style.AppThemeDark : R.style.AppThemeLight);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_profile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity = this;
         background = new TypedValue();
         getTheme().resolveAttribute(android.R.attr.windowBackground, background, true);
-
-        Bundle extras = getIntent().getExtras();
-        usersLogins = (ArrayList<String>) extras.getSerializable("usersLogins");
-        usersEmails = (ArrayList<String>) extras.getSerializable("usersEmails");
 
         progressFL = findViewById(R.id.progressFL);
         if (getSettings()[0])
@@ -117,7 +120,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        signUpB = findViewById(R.id.signUpB);
+        editB = findViewById(R.id.editB);
         emailET = findViewById(R.id.emailET);
         loginET = findViewById(R.id.usernameET);
         nameET = findViewById(R.id.nameET);
@@ -125,20 +128,28 @@ public class SignUpActivity extends AppCompatActivity {
         okDPB.callOnClick();
         pass1ET = findViewById(R.id.passET);
         pass2ET = findViewById(R.id.pass2ET);
-        signUpB.setEnabled(false);
+        editB.setEnabled(false);
 
-        signUpB.setOnClickListener(new View.OnClickListener() {
+        editB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (checkData()) {
+                    newLogin = loginET.getText().toString();
+                    newEmail = emailET.getText().toString();
+                    newName = nameET.getText().toString();
+                    newBirth = birthET.getText().toString();
+                    newPassword = uPassword;
+                    newEmailToken = uEmailToken;
+                    newPasswordToken = uPasswordToken;
+                    if (!uEmail.equals(emailET.getText().toString()))
+                        newEmailToken = random();
+                    if (!pass1ET.getText().toString().isEmpty()) {
+                        newPassword = pass1ET.getText().toString();
+                        newPasswordToken = random();
+                    }
                     progressFL.setVisibility(View.VISIBLE);
-                    tryCall(nameET.getText().toString(),
-                            loginET.getText().toString(),
-                            emailET.getText().toString(),
-                            birthET.getText().toString(),
-                            pass1ET.getText().toString(),
-                            random(),
-                            random());
+                    tryCall(uID, newLogin, newEmail, newName, newBirth, newPassword,
+                            newEmailToken, newPasswordToken);
                 }
             }
         });
@@ -146,16 +157,27 @@ public class SignUpActivity extends AppCompatActivity {
         retryIB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                noConnectionLL.setVisibility(View.GONE);
+                progressFL.setVisibility(View.VISIBLE);
                 if (checkData()) {
+                    newLogin = loginET.getText().toString();
+                    newEmail = emailET.getText().toString();
+                    newName = nameET.getText().toString();
+                    newBirth = birthET.getText().toString();
+                    newPassword = uPassword;
+                    newEmailToken = uEmailToken;
+                    newPasswordToken = uPasswordToken;
+                    if (!uEmail.equals(emailET.getText().toString()))
+                        newEmailToken = random();
+                    if (!pass1ET.getText().toString().isEmpty()) {
+                        newPassword = pass1ET.getText().toString();
+                        newPasswordToken = random();
+                    }
                     progressFL.setVisibility(View.VISIBLE);
-                    noConnectionLL.setVisibility(View.GONE);
-                    tryCall(nameET.getText().toString(),
-                            loginET.getText().toString(),
-                            emailET.getText().toString(),
-                            birthET.getText().toString(),
-                            pass1ET.getText().toString(),
-                            random(),
-                            random());
+                    tryCall(uID, newLogin, newEmail, newName, newBirth, newPassword,
+                            newEmailToken, newPasswordToken);
+                } else if (uID.equals("")) {
+                    tryGetUser();
                 }
             }
         });
@@ -234,17 +256,23 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
+        progressFL.setVisibility(View.VISIBLE);
+        tryGetUser();
     }
 
     private void checkFieldsFill() {
         if (!emailET.getText().toString().isEmpty() &&
                 !loginET.getText().toString().isEmpty() &&
                 !nameET.getText().toString().isEmpty() &&
-                !birthET.getText().toString().isEmpty() &&
-                !pass1ET.getText().toString().isEmpty() &&
-                !pass2ET.getText().toString().isEmpty())
-            signUpB.setEnabled(true);
-        else signUpB.setEnabled(false);
+                !birthET.getText().toString().isEmpty()) {
+            if ((!pass1ET.getText().toString().isEmpty() &&
+                    !pass2ET.getText().toString().isEmpty()) ||
+                    (pass1ET.getText().toString().isEmpty() &&
+                            pass2ET.getText().toString().isEmpty()))
+                editB.setEnabled(true);
+        }
+        else editB.setEnabled(false);
     }
 
     private boolean checkData() {
@@ -272,7 +300,7 @@ public class SignUpActivity extends AppCompatActivity {
             nameET.setError(getString(R.string.error_name_long));
             dataOk = false;
         }
-        if (pass1.length() < 8) {
+        if (pass1.length() > 0 && pass1.length() < 8) {
             pass1ET.setError(getString(R.string.error_pass_short));
             dataOk = false;
         }
@@ -301,44 +329,113 @@ public class SignUpActivity extends AppCompatActivity {
         return randomStringBuilder.toString();
     }
 
-    public void tryCall(final String name, final String login, final String email,
+    public void tryCall(final String id, final String name, final String login, final String email,
                         final String birth, final String pass,
                         final String tokenToConfirmEmail, final String tokenToResetPassword) {
         STInterface api = ApiUtils.getAPIService();
-        Call<UserModel> call = api.signUp(
-                login,
-                email,
-                name,
-                birth,
-                pass,
-                tokenToConfirmEmail,
-                tokenToResetPassword
-        );
+        Call<UserModel> call = api.changeUsersData(id, id, login, email, name, birth, pass,
+                tokenToConfirmEmail, tokenToResetPassword);
         call.enqueue(new Callback<UserModel>() {
             @Override
             public void onResponse(Call<UserModel> call, Response<UserModel> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(),
-                            R.string.new_user, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                    intent.putExtra("isNewUser", true);
-                    intent.putExtra("email", email);
-                    intent.putExtra("password", pass);
-                    startActivity(intent);
+                            R.string.acc_edit_success, Toast.LENGTH_LONG).show();
                     onBackPressed();
-                } else {
+                } else if (fuEmail.equals(emailET.getText().toString()) &&
+                        fuName.equals(nameET.getText().toString()) &&
+                        fuBirth.equals(birthET.getText().toString()) &&
+                        fuLogin.equals(loginET.getText().toString()) &&
+                        pass1ET.getText().toString().isEmpty() &&
+                        pass2ET.getText().toString().isEmpty())
+                    onBackPressed();
+                else {
+                    Toast.makeText(getApplicationContext(), response.message(), Toast.LENGTH_LONG).show();
                     progressFL.setVisibility(View.GONE);
                     if (usersEmails.contains(email)) {
-                        emailET.setError(getString(R.string.error_email_taken));
+                        if (!getCurrentUserID().equals(usersIDs.get(usersEmails.indexOf(email))))
+                            emailET.setError(getString(R.string.error_email_taken));
                     }
                     if (usersLogins.contains(login)) {
-                        loginET.setError(getString(R.string.error_username_taken));
+                        if (!getCurrentUserID().equals(usersIDs.get(usersLogins.indexOf(login))))
+                            loginET.setError(getString(R.string.error_username_taken));
                     }
                 }
 
             }
+
             @Override
             public void onFailure(Call<UserModel> call, Throwable t) {
+                progressFL.setVisibility(View.GONE);
+                noConnectionLL.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void tryGetUser() {
+        STInterface api = ApiUtils.getAPIService();
+        Call<UserModel> call = api.getUserByID(getCurrentUserID(), "json");
+        call.enqueue(new Callback<UserModel>() {
+            @Override
+            public void onResponse(Call<UserModel> call, Response<UserModel> response) {
+                if (response.isSuccessful()) {
+                    UserModel usersM = response.body();
+                    uID = usersM.getUserId();
+                    uLogin = usersM.getLogin();
+                    fuLogin = uLogin;
+                    uEmail = usersM.getEmail();
+                    fuEmail = uEmail;
+                    uName = usersM.getName();
+                    fuName = uName;
+                    uBirth = usersM.getBday();
+                    fuBirth = uBirth;
+                    uPassword = usersM.getPassword();
+                    fuPassword = uPassword;
+                    uEmailToken = usersM.getTokenToConfirmEmail();
+                    fuEmailToken = uEmailToken;
+                    uPasswordToken = usersM.getTokenToResetPassword();
+                    fuPasswordToken = uPasswordToken;
+
+                    nameET.setText(uName);
+                    emailET.setText(uEmail);
+                    loginET.setText(uLogin);
+                    birthET.setText(uBirth);
+                    tryGetUsers();
+                } else {
+                    resetCurrentUserID();
+                    onBackPressed();
+                };
+            }
+            @Override
+            public void onFailure(Call<UserModel> call, Throwable t) {
+                progressFL.setVisibility(View.GONE);
+                noConnectionLL.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    public void tryGetUsers() {
+        STInterface api = ApiUtils.getAPIService();
+        Call<UserModel[]> call = api.getUsers("json");
+        call.enqueue(new Callback<UserModel[]>() {
+            @Override
+            public void onResponse(Call<UserModel[]> call, Response<UserModel[]> response) {
+                if (response.isSuccessful()) {
+                    UserModel[] usersM = response.body();
+                    usersIDs = new ArrayList<>();
+                    usersLogins = new ArrayList<>();
+                    usersEmails = new ArrayList<>();
+                    usersPasswords = new ArrayList<>();
+                    for (int i=0; i < usersM.length; i++) {
+                        usersIDs.add(usersM[i].getUserId());
+                        usersLogins.add(usersM[i].getLogin());
+                        usersEmails.add(usersM[i].getEmail());
+                        usersPasswords.add(usersM[i].getPassword());
+                    }
+                    progressFL.setVisibility(View.GONE);
+                }
+            }
+            @Override
+            public void onFailure(Call<UserModel[]> call, Throwable t) {
                 progressFL.setVisibility(View.GONE);
                 noConnectionLL.setVisibility(View.VISIBLE);
             }
@@ -352,9 +449,30 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (getSettings()[0])
+            getMenuInflater().inflate(R.menu.menu_dark, menu);
+        else
+            getMenuInflater().inflate(R.menu.menu_light, menu);
+        MenuItem settings = menu.findItem(R.id.settings);
+        settings.setVisible(false);
+        settings.setEnabled(false);
+        MenuItem logOut = menu.findItem(R.id.logOut);
+        logOut.setVisible(true);
+        logOut.setEnabled(true);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.logOut:
+                resetCurrentUserID();
+                changeMATheme();
                 onBackPressed();
                 return true;
             default:

@@ -4,15 +4,24 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
         android:paddingTop="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/acc_text" />
+
+        <View style="@style/dividerHorizontal"
+            android:layout_marginBottom="20dp"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -30,39 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/email_u" />
-
-                <EditText
-                    android:id="@+id/emailET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/email_h"
-                    android:inputType="textEmailAddress"
-                    android:paddingTop="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/username_u" />
-
-                <EditText
-                    android:id="@+id/usernameET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/username_h"
-                    android:inputType="textEmailAddress"
-                    android:paddingTop="5dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/name_u" />
+                    android:text="@string/acc_name" />
 
                 <EditText
                     android:id="@+id/nameET"
@@ -78,16 +55,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/birth_u" />
+                    android:text="@string/acc_email" />
 
                 <EditText
-                    android:id="@+id/birthET"
+                    android:id="@+id/emailET"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="@string/birth_h"
-                    android:inputType="date"
-                    android:focusable="false"
+                    android:hint="@string/email_h"
+                    android:inputType="textEmailAddress"
                     android:paddingTop="5dp" />
 
                 <TextView
@@ -95,7 +71,43 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/password_u1" />
+                    android:text="@string/acc_login" />
+
+                <EditText
+                    android:id="@+id/usernameET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/username_h"
+                    android:inputType="textEmailAddress"
+                    android:paddingTop="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/acc_bday" />
+
+                <EditText
+                    android:id="@+id/birthET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="@string/birth_h"
+                    android:inputType="date"
+                    android:paddingTop="5dp" />
+
+                <View style="@style/dividerHorizontal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/acc_pass" />
 
                 <EditText
                     android:id="@+id/passET"
@@ -125,7 +137,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/signUpB"
+            android:id="@+id/editB"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -134,8 +146,7 @@
             android:enabled="false"
             android:paddingEnd="25dp"
             android:paddingStart="25dp"
-            android:text="@string/sign_up" />
-
+            android:text="@string/edit_profile" />
     </LinearLayout>
 
     <FrameLayout

@@ -10,19 +10,20 @@ import android.widget.TextView;
 
 import ru.nstu.schultetable.R;
 
+import static ru.nstu.schultetable.activities.MainActivity.getSettings;
+
 public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getSettings()[0] ? R.style.AppThemeDark : R.style.AppThemeLight);
         setContentView(R.layout.activity_help);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView tv = findViewById(R.id.textView);
-
         Intent intent = getIntent();
         boolean mode = intent.getBooleanExtra("changeTV", false);
-
         if (mode)
             tv.setText(R.string.about);
         else
