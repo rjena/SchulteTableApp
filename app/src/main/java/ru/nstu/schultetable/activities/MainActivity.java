@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (getCurrentUserID().equals("0"))
+            start.setEnabled(false);
+        else
+            start.setEnabled(true);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

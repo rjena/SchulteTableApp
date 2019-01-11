@@ -95,4 +95,10 @@
     <string name="edit_profile">Редактировать профиль</string>
     <string name="log_out">Выйти из профиля</string>
     <string name="user">Пользователь</string>
+    <!---->
+    <string name="user_res">Ваши последние результаты</string>
+    <string name="best_user_res">Ваш наивысший результат</string>
+    <string name="mean_user_res">Ваш средний результат</string>
+    <string name="mean_all_res">Cредний результат среди всех пользователей</string>
+    <string name="mean_age_res">Cредний результат среди вашей возрастной группы</string>
 </resources>

@@ -40,7 +40,9 @@ public class ReadyActivity extends AppCompatActivity {
         stat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getApplicationContext(), StatActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

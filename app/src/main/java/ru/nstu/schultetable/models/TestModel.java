@@ -26,6 +26,10 @@ public class TestModel {
     @Expose
     private int age;
 
+    public String getId() {
+        return id;
+    }
+
     public String getUserId() {
         return userId;
     }
